@@ -8,7 +8,7 @@ use crate::mysql::protocol::connect::{
 };
 use crate::mysql::protocol::Capabilities;
 use crate::mysql::{MySqlConnectOptions, MySqlConnection, MySqlSslMode};
-use bytes::buf::BufExt;
+use bytes::buf::BufExt as _;
 
 impl MySqlConnection {
     pub(crate) async fn establish(options: &MySqlConnectOptions) -> Result<Self, Error> {
@@ -129,6 +129,7 @@ impl MySqlConnection {
             stream,
             transaction_depth: 0,
             cache_statement: StatementCache::new(options.statement_cache_capacity),
+            log_settings: options.log_settings.clone(),
         })
     }
 }
